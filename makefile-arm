@@ -1,0 +1,24 @@
+BUILDROOT_HOME=/home/khienloong/Desktop/buildroot-2021.05 
+CC=$(BUILDROOT_HOME)/output/host/usr/bin/arm-linux-gcc
+CFLAGS=--sysroot=$(BUILDROOT_HOME)/output/staging
+INCLUDES=
+LFLAGS=
+
+LIBS=-lcurl -uClibc -lc
+
+SRC=week3.c
+OBJ=$(SRC:.c=.o)
+MAIN=program
+
+RM=rm -rf
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(MAIN): $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJ) $(LFLAGS) $(LIBS)
+
+all: $(MAIN) 
+
+clean:
+	$(RM) $(MAIN) *.o *~
